@@ -1,0 +1,13 @@
+{
+  "schemaVersion": 1,
+  "id": "testbed",
+  "version": "0.1.0",
+  "entrypoints": {
+    "main": [
+      "dev.neuralnexus.testbed.v1_15_2.fabric.TestBedFabric"
+    ]
+  },
+  "mixins": [
+    "testbed.mixins.v1_15_2.fabric.json"
+  ]
+}

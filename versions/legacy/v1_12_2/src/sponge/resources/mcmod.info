@@ -1,0 +1,19 @@
+[
+  {
+    "modid": "testbed",
+    "version": "0.1.0",
+    "mcversion": "1.12.2",
+    "screenshots": [],
+    "useDependencyInformation": true,
+    "dependencies": [
+        {
+            "modid": "spongeapi",
+            "version": "[7.0.0,)",
+            "loader": "java_plain",
+            "optional": false,
+            "loadorder": "after"
+        }
+    ],
+    "dependants": []
+  }
+]

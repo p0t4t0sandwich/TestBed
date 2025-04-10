@@ -1,0 +1,25 @@
+modLoader = "javafml"
+loaderVersion = "[1,)"
+
+[[mods]]
+modId = "testbed"
+version = "0.1.0"
+
+[[mixins]]
+config = "testbed.mixins.v1_21_1.forge.json"
+
+# Forge Dependency
+[[dependencies.testbed]]
+modId = "forge"
+mandatory = true
+versionRange = "[1,)"
+ordering = "NONE"
+side = "BOTH"
+
+# Minecraft Dependency
+[[dependencies.testbed]]
+modId = "minecraft"
+mandatory = true
+versionRange = "[1,)"
+ordering = "NONE"
+side = "BOTH"

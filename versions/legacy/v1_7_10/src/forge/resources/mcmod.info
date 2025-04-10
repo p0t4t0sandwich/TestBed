@@ -1,0 +1,11 @@
+[
+  {
+    "modid": "testbed",
+    "version": "0.1.0",
+    "mcversion": "1.7.10",
+    "screenshots": [],
+    "useDependencyInformation": true,
+    "dependencies": [],
+    "dependants": []
+  }
+]

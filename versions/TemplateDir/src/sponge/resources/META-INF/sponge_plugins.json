@@ -1,0 +1,23 @@
+{
+  "loader": {
+    "name": "java_plain",
+    "version": "1.0"
+  },
+  "license": "MIT",
+  "plugins": [
+    {
+      "id": "testbed",
+      "entrypoint": "dev.neuralnexus.testbed.vERS.sponge.TestBedSponge",
+      "name": "TestBed",
+      "version": "0.1.0",
+      "dependencies": [
+        {
+          "id": "spongeapi",
+          "version": "${spongeapi_version}",
+          "load-order": "after",
+          "optional": false
+        }
+      ]
+    }
+  ]
+}

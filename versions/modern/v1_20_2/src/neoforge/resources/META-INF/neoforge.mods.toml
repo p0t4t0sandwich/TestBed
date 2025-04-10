@@ -1,0 +1,25 @@
+modLoader = "javafml"
+loaderVersion = "[1,)"
+
+[[mods]]
+modId = "testbed"
+version = "0.1.0"
+
+[[mixins]]
+config = "testbed.mixins.v1_20_2.neoforge.json"
+
+# NeoForge Dependency
+[[dependencies.testbed]]
+modId = "neoforge"
+type = "required"
+versionRange = "[20.2,)"
+ordering = "NONE"
+side = "BOTH"
+
+# Minecraft Dependency
+[[dependencies.testbed]]
+modId = "minecraft"
+type = "required"
+versionRange = "[1,)"
+ordering = "NONE"
+side = "BOTH"
