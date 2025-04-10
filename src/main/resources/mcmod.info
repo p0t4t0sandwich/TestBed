@@ -1,0 +1,18 @@
+[
+  {
+    "modid": "${project_id}",
+    "name": "${project_name}",
+    "license": "${license}",
+    "description": "${project_description}",
+    "version": "${version}",
+    "mcversion": "${minecraft_version}",
+    "authorList": [
+      "${authors}"
+    ],
+    "credits": "${authors}",
+    "screenshots": [],
+    "useDependencyInformation": true,
+    "dependencies": [],
+    "dependants": []
+  }
+]

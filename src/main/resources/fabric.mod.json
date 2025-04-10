@@ -1,0 +1,35 @@
+{
+  "schemaVersion": 1,
+  "id": "${project_id}",
+  "version": "${version}",
+  "name": "${project_name}",
+  "description": "${project_description}",
+  "authors": [
+    {
+      "name": "p0t4t0sandwich",
+      "contact": {
+        "sources": "https://github.com/p0t4t0sandwich/",
+        "homepage": "https://links.sperrer.ca/"
+      }
+    }
+  ],
+  "license": "${license}",
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "dev.neuralnexus.testbed.platforms.FabricLoaderPlugin"
+    ]
+  },
+  "mixins": [
+    "${project_id}.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=0.9.0",
+    "minecraft": "*"
+  },
+  "suggests": {
+    "fabric-api-base": "*",
+    "legacy-fabric-api-base": "*",
+    "taterlib": "*"
+  }
+}

@@ -1,0 +1,44 @@
+# https://neoforged.net
+modLoader = "javafml"
+loaderVersion = "${loader_version_range}"
+license = "${license}"
+issueTrackerURL = "${issue_url}"
+
+[[mods]]
+modId = "${project_id}"
+version = "${version}"
+displayName = "${project_name}"
+updateJSONURL = "${update_json_url}"
+displayURL = "${homepage_url}"
+logoFile = "${project_name}.png.gz"
+credits = "${authors}"
+authors = "${authors}"
+displayTest = "IGNORE_SERVER_VERSION"
+description = '''${project_description}'''
+
+[[mixins]]
+config = "${project_id}.mixins.json"
+
+# NeoForge Dependency
+[[dependencies.${ project_id }]]
+modId = "neoforge"
+type = "required"
+versionRange = "${neo_version_range}"
+ordering = "NONE"
+side = "BOTH"
+
+# Minecraft Dependency
+[[dependencies.${ project_id }]]
+modId = "minecraft"
+type = "required"
+versionRange = "${minecraft_version_range}"
+ordering = "NONE"
+side = "BOTH"
+
+# TaterLib
+[[dependencies.${ project_id }]]
+modId = "taterlib"
+type = "optional"
+versionRange = "[${taterlib_version},)"
+ordering = "NONE"
+side = "SERVER"
