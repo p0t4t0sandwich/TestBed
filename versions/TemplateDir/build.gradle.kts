@@ -15,37 +15,14 @@ java.sourceCompatibility = JavaVersion.toVersion(javaVersion)
 java.targetCompatibility = JavaVersion.toVersion(javaVersion)
 
 sourceSets {
-    create("fabric") {
-        compileClasspath += sourceSets.main.get().output
-        runtimeClasspath += sourceSets.main.get().output
-    }
-    create("forge") {
-        compileClasspath += sourceSets.main.get().output
-        runtimeClasspath += sourceSets.main.get().output
-    }
-    create("neoforge") {
-        compileClasspath += sourceSets.main.get().output
-        runtimeClasspath += sourceSets.main.get().output
-    }
-    create("sponge") {
-        compileClasspath += sourceSets.main.get().output
-        runtimeClasspath += sourceSets.main.get().output
-    }
+    setupSourceSets("fabric", "forge", "neoforge", "sponge")
 }
 
 @Suppress("UnstableApiUsage")
 configurations {
     val mainCompileOnly by creating
-    named("compileOnly") {
-        extendsFrom(configurations.getByName("fabricCompileOnly"))
-        extendsFrom(configurations.getByName("forgeCompileOnly"))
-        extendsFrom(configurations.getByName("neoforgeCompileOnly"))
-        extendsFrom(configurations.getByName("spongeCompileOnly"))
-    }
     val modImplementation by creating
-    named("modImplementation") {
-        extendsFrom(configurations.getByName("fabricImplementation"))
-    }
+    setupConfigurations("fabric", "forge", "neoforge", "sponge")
 }
 
 // ------------------------------------------- Vanilla -------------------------------------------
@@ -141,15 +118,17 @@ tasks.register<Jar>("spongeJar") {
 
 // ------------------------------------------- Common -------------------------------------------
 dependencies {
-    listOf(
+    setupCompileDeps(listOf(
+        project(":api"),
+        ), "main", "fabric", "forge", "neoforge", "sponge")
+
+    setupCompileDeps(listOf(
         libs.mixin,
-    ).forEach {
-        "mainCompileOnly"(it)
-        "fabricCompileOnly"(it)
-        "forgeCompileOnly"(it)
-        "neoforgeCompileOnly"(it)
-        "spongeCompileOnly"(it)
-    }
+        ), "main")
+
+    setupRuntimeDeps(listOf(
+        project(":api"),
+        ), "fabric", "forge", "neoforge")
 
     listOf(
         "fabric-api-base",

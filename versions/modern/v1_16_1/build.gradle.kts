@@ -15,27 +15,14 @@ java.sourceCompatibility = JavaVersion.toVersion(javaVersion)
 java.targetCompatibility = JavaVersion.toVersion(javaVersion)
 
 sourceSets {
-    create("fabric") {
-        compileClasspath += sourceSets.main.get().output
-        runtimeClasspath += sourceSets.main.get().output
-    }
-    create("forge") {
-        compileClasspath += sourceSets.main.get().output
-        runtimeClasspath += sourceSets.main.get().output
-    }
+    setupSourceSets("fabric", "forge")
 }
 
 @Suppress("UnstableApiUsage")
 configurations {
     val mainCompileOnly by creating
-    named("compileOnly") {
-        extendsFrom(configurations.getByName("fabricCompileOnly"))
-        extendsFrom(configurations.getByName("forgeCompileOnly"))
-    }
     val modImplementation by creating
-    named("modImplementation") {
-        extendsFrom(configurations.getByName("fabricImplementation"))
-    }
+    setupConfigurations("fabric", "forge")
 }
 
 // ------------------------------------------- Vanilla -------------------------------------------
@@ -121,13 +108,17 @@ tasks.register<ShadowJar>("relocateForgeJar") {
 
 // ------------------------------------------- Common -------------------------------------------
 dependencies {
-    listOf(
+    setupCompileDeps(listOf(
+        project(":api"),
+        ), "main", "fabric", "forge")
+
+    setupCompileDeps(listOf(
         libs.mixin,
-    ).forEach {
-        "mainCompileOnly"(it)
-        "fabricCompileOnly"(it)
-        "forgeCompileOnly"(it)
-    }
+        ), "main")
+
+    setupRuntimeDeps(listOf(
+        project(":api"),
+        ), "fabric", "forge")
 
     listOf(
         "fabric-api-base",

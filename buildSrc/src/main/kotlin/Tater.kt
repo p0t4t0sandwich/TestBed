@@ -1,6 +1,8 @@
 import groovy.json.JsonOutput
 import groovy.json.JsonSlurper
 import org.gradle.api.Project
+import org.gradle.api.artifacts.Dependency
+import org.gradle.api.artifacts.ProjectDependency
 import org.gradle.api.file.ConfigurableFileCollection
 import org.gradle.api.file.FileTree
 import org.gradle.api.tasks.bundling.Jar
@@ -98,4 +100,57 @@ val Project.bundleJars: (List<File>) -> List<FileTree> get() = { jars ->
     }
     zipped + mergeMixinConfigs(mixinConfigs)
     zipped
+}
+
+fun Project.setupSourceSets(vararg names: String) {
+    val srcSets = sourceSets
+    names.forEach { name ->
+        srcSets.create(name) {
+            compileClasspath += srcSets.getByName("main").output
+            runtimeClasspath += srcSets.getByName("main").output
+        }
+    }
+}
+
+fun Project.setupConfigurations(vararg names: String) {
+    configurations.named("compileOnly") {
+        names.forEach { name ->
+            extendsFrom(configurations.getByName(name + "CompileOnly"))
+        }
+    }
+    if (names.contains("fabric")) {
+        configurations.named("modImplementation") {
+            extendsFrom(configurations.getByName("fabricImplementation"))
+        }
+    }
+}
+
+fun Project.setupCompileDeps(deps: List<Any>, vararg names: String) {
+    deps.forEach { dep ->
+        names.forEach { name ->
+            when (dep) {
+                is ProjectDependency -> {
+                    configurations.getByName(name + "CompileOnly").dependencies.add(dep)
+                }
+                is Dependency -> {
+                    configurations.getByName(name + "CompileOnly").dependencies.add(dep)
+                }
+            }
+        }
+    }
+}
+
+fun Project.setupRuntimeDeps(deps: List<Any>, vararg names: String) {
+    deps.forEach { dep ->
+        names.forEach { name ->
+            when (dep) {
+                is ProjectDependency -> {
+                    configurations.getByName(name + "RuntimeOnly").dependencies.add(dep)
+                }
+                is Dependency -> {
+                    configurations.getByName(name + "RuntimeOnly").dependencies.add(dep)
+                }
+            }
+        }
+    }
 }

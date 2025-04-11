@@ -11,6 +11,8 @@ plugins {
 
 rootProject.name = "testbed"
 
+include(":api")
+
 val legacyVersions = listOf(
     "1_7_10",
     "1_8_9",

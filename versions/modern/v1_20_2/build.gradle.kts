@@ -15,32 +15,14 @@ java.sourceCompatibility = JavaVersion.toVersion(javaVersion)
 java.targetCompatibility = JavaVersion.toVersion(javaVersion)
 
 sourceSets {
-    create("fabric") {
-        compileClasspath += sourceSets.main.get().output
-        runtimeClasspath += sourceSets.main.get().output
-    }
-    create("forge") {
-        compileClasspath += sourceSets.main.get().output
-        runtimeClasspath += sourceSets.main.get().output
-    }
-    create("neoforge") {
-        compileClasspath += sourceSets.main.get().output
-        runtimeClasspath += sourceSets.main.get().output
-    }
+    setupSourceSets("fabric", "forge", "neoforge")
 }
 
 @Suppress("UnstableApiUsage")
 configurations {
     val mainCompileOnly by creating
-    named("compileOnly") {
-        extendsFrom(configurations.getByName("fabricCompileOnly"))
-        extendsFrom(configurations.getByName("forgeCompileOnly"))
-        extendsFrom(configurations.getByName("neoforgeCompileOnly"))
-    }
     val modImplementation by creating
-    named("modImplementation") {
-        extendsFrom(configurations.getByName("fabricImplementation"))
-    }
+    setupConfigurations("fabric", "forge", "neoforge")
 }
 
 // ------------------------------------------- Vanilla -------------------------------------------
@@ -130,14 +112,17 @@ tasks.register<ShadowJar>("relocateNeoForgeJar") {
 
 // ------------------------------------------- Common -------------------------------------------
 dependencies {
-    listOf(
+    setupCompileDeps(listOf(
+        project(":api"),
+        ), "main", "fabric", "forge", "neoforge")
+
+    setupCompileDeps(listOf(
         libs.mixin,
-    ).forEach {
-        "mainCompileOnly"(it)
-        "fabricCompileOnly"(it)
-        "forgeCompileOnly"(it)
-        "neoforgeCompileOnly"(it)
-    }
+        ), "main")
+
+    setupRuntimeDeps(listOf(
+        project(":api"),
+        ), "fabric", "forge", "neoforge")
 
     listOf(
         "fabric-api-base",
