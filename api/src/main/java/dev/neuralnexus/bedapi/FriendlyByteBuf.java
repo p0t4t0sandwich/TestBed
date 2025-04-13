@@ -15,7 +15,7 @@ public interface FriendlyByteBuf {
     ResourceLocation readResourceLocation();
 
     // ByteBuf methods
-    
+
     // @spotless:off
     int capacity();
     FriendlyByteBuf capacity(int i);
@@ -202,4 +202,3 @@ public interface FriendlyByteBuf {
     boolean release(int i);
     // spotless:on
 }
-    
