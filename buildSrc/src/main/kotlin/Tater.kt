@@ -35,7 +35,7 @@ val Project.mappingsVersion: String get() = properties["mapping_version"].toStri
 
 val Project.javaVersion: String get() = properties["java_version"].toString()
 
-val Project.jarToFiles: (String) -> FileTree get() = {
+val Project.jarToFileTree: (String) -> FileTree get() = {
     val jar: Jar = when (val task = tasks.getByName(it)) {
         is Jar -> task
         is RemapJarTask -> task.asJar
@@ -100,6 +100,15 @@ val Project.bundleJars: (List<File>) -> List<FileTree> get() = { jars ->
     }
     zipped + mergeMixinConfigs(mixinConfigs)
     zipped
+}
+
+val Project.subprojectJarToFile: (String, String) -> File get() = { subproject, taskName ->
+    val jar: Jar = when (val task = rootProject.project(subproject).tasks.getByName(taskName)) {
+        is Jar -> task
+        is RemapJarTask -> task.asJar
+        else -> throw IllegalArgumentException("Task $taskName is not a Jar task")
+    }
+    jar.archiveFile.get().asFile
 }
 
 fun Project.setupSourceSets(vararg names: String) {
