@@ -6,7 +6,15 @@
   },
   "required": false,
   "package": "dev.neuralnexus.testbed.mixin",
-  "mixins": [],
+  "mixins": [
+    "v1_20_1.forge.accessors.ServerGamePacketListenerImplAccessor",
+    "v1_20_1.forge.api.CustomPayloadPacket_API",
+    "v1_20_1.forge.api.FriendlyByteBuf_API",
+    "v1_20_1.forge.api.ResourceLocation_API",
+    "v1_20_1.forge.listeners.C2SCustomPayloadMixin"
+  ],
   "server": [],
-  "client": []
+  "client": [
+    "v1_20_1.forge.listeners.S2CCustomPayloadMixin"
+  ]
 }
