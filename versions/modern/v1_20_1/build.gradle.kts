@@ -57,7 +57,7 @@ tasks.named<RemapJarTask>("remapFabricJar") {
 
 tasks.register<ShadowJar>("relocateFabricJar") {
     dependsOn("remapFabricJar")
-    from(jarToFiles("remapFabricJar"))
+    from(jarToFileTree("remapFabricJar"))
     archiveClassifier.set("fabric")
     dependencies {
         exclude("dev/neuralnexus/testbed/mixin/v1_20_1/vanilla/**")
@@ -84,7 +84,7 @@ tasks.named<RemapJarTask>("remapForgeJar") {
 
 tasks.register<ShadowJar>("relocateForgeJar") {
     dependsOn("remapForgeJar")
-    from(jarToFiles("remapForgeJar"))
+    from(jarToFileTree("remapForgeJar"))
     archiveClassifier.set("forge")
     dependencies {
         exclude("dev/neuralnexus/testbed/mixin/v1_20_1/vanilla/**")
@@ -122,7 +122,7 @@ tasks.shadowJar {
         "relocateForgeJar"
     ).forEach {
         dependsOn(it)
-        from(jarToFiles(it))
+        from(jarToFileTree(it))
     }
     archiveClassifier.set("")
 }

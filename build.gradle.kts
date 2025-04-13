@@ -1,3 +1,4 @@
+import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
 import java.time.Instant
 
 plugins {
@@ -5,6 +6,7 @@ plugins {
     id("maven-publish")
     id("idea")
     id("eclipse")
+    alias(libs.plugins.shadow)
     alias(libs.plugins.spotless)
 }
 
@@ -82,37 +84,38 @@ spotless {
 }
 
 // --------------------------- Build MonoJar --------------------------------
-//tasks.register<Jar>("build_monojar") {
-//    val mcVersion = "1.21.1"
-//    archiveFileName = "${projectId}-${version}.jar"
-//    destinationDirectory = file("./build/libs")
-//    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
-//
-//    manifest {
-//        attributes(
-//            mapOf(
-//                "Specification-Title" to "$projectName $mcVersion",
-//                "Specification-Version" to version,
-//                "Specification-Vendor" to "NeuralNexus",
-//                "Implementation-Version" to version,
-//                "Implementation-Vendor" to "NeuralNexus",
-//                "Implementation-Timestamp" to Instant.now().toString(),
-//                "FMLCorePluginContainsFMLMod" to "true",
-//                "TweakClass" to "org.spongepowered.asm.launch.MixinTweaker",
-//                "MixinConfigs" to "testbed.mixins.json"
-//            )
-//        )
-//    }
-//
-//    from(listOf("README.md", "LICENSE")) {
-//        into("META-INF")
-//    }
-//    val jarFiles = listOf(
-//            file("./versions/v1_21_1/build/libs/${projectId}-1.21.1-${version}.jar")
-//    )
-//    from(bundleJars(jarFiles))
-//}
-//
+tasks.register<Jar>("build_monojar") {
+    val mcVersion = "1.21.1"
+    archiveFileName = "${projectId}-${version}.jar"
+    destinationDirectory = file("./build/libs")
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+
+    manifest {
+        attributes(
+            mapOf(
+                "Specification-Title" to "$projectName $mcVersion",
+                "Specification-Version" to version,
+                "Specification-Vendor" to "NeuralNexus",
+                "Implementation-Version" to version,
+                "Implementation-Vendor" to "NeuralNexus",
+                "Implementation-Timestamp" to Instant.now().toString(),
+                "FMLCorePluginContainsFMLMod" to "true",
+                "TweakClass" to "org.spongepowered.asm.launch.MixinTweaker",
+                "MixinConfigs" to "testbed.mixins.json"
+            )
+        )
+    }
+
+    from(listOf("README.md", "LICENSE")) {
+        into("META-INF")
+    }
+    val jarFiles = listOf(
+        subprojectJarToFile(":api", "shadowJar"),
+//        subprojectJarToFile(":versions:modern:v1_20_1", "shadowJar")
+    )
+    from(bundleJars(jarFiles))
+}
+
 //tasks.withType<ProcessResources>().configureEach {
 //    filesMatching(
 //        listOf(

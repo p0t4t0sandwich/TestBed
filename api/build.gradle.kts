@@ -1,5 +1,6 @@
 plugins {
     id("java-library")
+    alias(libs.plugins.shadow)
 }
 
 base {
@@ -15,7 +16,7 @@ dependencies {
     compileOnly(libs.asm.tree)
 
     // Tooling
-    api(variantOf(libs.modapi) {
+    implementation(variantOf(libs.modapi) {
         classifier("downgraded-8-shaded")
     })
 }
@@ -28,3 +29,11 @@ java {
     sourceCompatibility = JavaVersion.toVersion(javaVersion)
     targetCompatibility = JavaVersion.toVersion(javaVersion)
 }
+
+tasks.shadowJar {
+    dependencies {
+        exclude(dependency("com.mojang:brigadier"))
+    }
+}
+
+tasks.build.get().dependsOn(tasks.shadowJar)
