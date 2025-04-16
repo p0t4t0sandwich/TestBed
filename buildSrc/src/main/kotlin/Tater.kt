@@ -77,7 +77,7 @@ val Project.mergeMixinConfigs: (List<File>)  -> FileTree get() = { mixinConfigs 
         ),
         "required" to false,
         "minVersion" to "0.8",
-        "plugin" to "dev.neuralnexus.testbed.mixin.plugin.SaddleUpMixinPlugin",
+//        "plugin" to "dev.neuralnexus.testbed.mixin.plugin.SaddleUpMixinPlugin",
         "package" to "dev.neuralnexus.testbed.mixin",
         "compatibilityLevel" to "JAVA_8",
         "mixins" to mixins,
