@@ -109,9 +109,13 @@ tasks.register<Jar>("build_monojar") {
     from(listOf("README.md", "LICENSE")) {
         into("META-INF")
     }
+    evaluationDependsOn(":api")
+    evaluationDependsOn(":versions:modern:v1_20_1")
+    dependsOn(rootProject.project(":api").tasks.getByName("shadowJar"))
+    dependsOn(rootProject.project(":versions:modern:v1_20_1").tasks.getByName("shadowJar"))
     val jarFiles = listOf(
         subprojectJarToFile(":api", "shadowJar"),
-//        subprojectJarToFile(":versions:modern:v1_20_1", "shadowJar")
+        subprojectJarToFile(":versions:modern:v1_20_1", "shadowJar")
     )
     from(bundleJars(jarFiles))
 }
